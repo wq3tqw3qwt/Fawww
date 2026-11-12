@@ -6,9 +6,11 @@
 	- Text uses TextScaled with UITextSizeConstraint so it stays readable on phones.
 ]]
 
+local GuiService = game:GetService("GuiService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local SoundService = game:GetService("SoundService")
 local TweenService = game:GetService("TweenService")
+local UserInputService = game:GetService("UserInputService")
 
 local Config = require(ReplicatedStorage.Shared.Config)
 
@@ -94,8 +96,38 @@ function UIKit.Grid(parent: Instance, cellScale: Vector2, paddingScale: number?)
 	})
 end
 
+-- Locks width:height. An element sized with zero height (e.g. UDim2.fromScale(1, 0)) means
+-- "height follows width": FitWithinMaxSize would collapse a zero-height box to 0 px, so the box
+-- is made very tall and the constraint then fits it by width (height = width / ratio).
+local WIDTH_DRIVEN_BOX = 100000
+
 function UIKit.Aspect(parent: Instance, ratio: number): UIAspectRatioConstraint
+	if parent:IsA("GuiObject") and parent.Size.Y.Scale == 0 and parent.Size.Y.Offset == 0 then
+		local gui = parent :: GuiObject
+		gui.Size = UDim2.new(gui.Size.X, UDim.new(0, WIDTH_DRIVEN_BOX))
+	end
 	return UIKit.Create("UIAspectRatioConstraint", { AspectRatio = ratio, Parent = parent })
+end
+
+-- Gamepad focus: only move the selection when a gamepad is in use and the target can be selected,
+-- otherwise Roblox warns "Setting GuiService.SelectedObject to invalid GuiObject".
+function UIKit.Select(target: GuiObject?)
+	local lastInput = UserInputService:GetLastInputType()
+	local usingGamepad = lastInput.Name:sub(1, 7) == "Gamepad"
+	if not usingGamepad or target == nil then
+		return
+	end
+	if not target.Selectable or not target:IsDescendantOf(game) then
+		return
+	end
+	local node: Instance? = target
+	while node and node:IsA("GuiObject") do
+		if not node.Visible then
+			return
+		end
+		node = node.Parent
+	end
+	GuiService.SelectedObject = target
 end
 
 function UIKit.Tween(

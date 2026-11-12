@@ -20,23 +20,24 @@ function Maid.new(): Maid
 	return setmetatable({ _tasks = {} }, Maid)
 end
 
-local function cleanup(task: any)
-	local kind = typeof(task)
+-- `item` (not `task`) so the global task library stays reachable for task.cancel.
+local function cleanup(item: any)
+	local kind = typeof(item)
 	if kind == "RBXScriptConnection" then
-		task:Disconnect()
+		item:Disconnect()
 	elseif kind == "Instance" then
-		task:Destroy()
+		item:Destroy()
 	elseif kind == "thread" then
-		if coroutine.status(task) ~= "dead" then
-			pcall(task.cancel, task)
+		if coroutine.status(item) ~= "dead" then
+			pcall(task.cancel, item)
 		end
 	elseif kind == "function" then
-		task()
-	elseif type(task) == "table" then
-		if type(task.Destroy) == "function" then
-			task:Destroy()
-		elseif type(task.Disconnect) == "function" then
-			task:Disconnect()
+		item()
+	elseif type(item) == "table" then
+		if type(item.Destroy) == "function" then
+			item:Destroy()
+		elseif type(item.Disconnect) == "function" then
+			item:Disconnect()
 		end
 	end
 end

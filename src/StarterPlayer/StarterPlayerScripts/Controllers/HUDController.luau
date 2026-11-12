@@ -137,7 +137,7 @@ local function layout()
 	local rows = math.max(1, math.ceil(#visible / MAX_PER_ROW))
 	local gridTop = top + 0.11
 	local availablePx = math.max(0.1, 0.8 - gridTop) * vp.Y
-	local sidePx = math.min(Config.UI.MinTapSize * short * 1.15, availablePx / (rows + 0.2))
+	local sidePx = math.min(Config.UI.MinTapSize * short, availablePx / (rows + 0.2))
 	local cx, cy = sidePx / vp.X, sidePx / vp.Y
 	local gx, gy = 0.18 * cx, 0.18 * cy
 	for index, entry in visible do
