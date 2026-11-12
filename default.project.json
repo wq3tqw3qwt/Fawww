@@ -1,0 +1,36 @@
+{
+  "name": "FactoryEmpire",
+  "tree": {
+    "$className": "DataModel",
+    "ReplicatedStorage": {
+      "$path": "src/ReplicatedStorage"
+    },
+    "ServerScriptService": {
+      "$path": "src/ServerScriptService",
+      "ServerPackages": {
+        "$path": "ServerPackages"
+      }
+    },
+    "ServerStorage": {
+      "$path": "src/ServerStorage"
+    },
+    "StarterPlayer": {
+      "StarterPlayerScripts": {
+        "$path": "src/StarterPlayer/StarterPlayerScripts"
+      }
+    },
+    "StarterGui": {
+      "$path": "src/StarterGui"
+    },
+    "Workspace": {
+      "$properties": {
+        "StreamingEnabled": true
+      }
+    },
+    "Players": {
+      "$properties": {
+        "CharacterAutoLoads": true
+      }
+    }
+  }
+}

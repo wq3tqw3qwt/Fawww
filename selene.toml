@@ -1,0 +1,5 @@
+std = "roblox"
+exclude = ["Packages/*", "ServerPackages/*", "DevPackages/*", "tests/*", "tools/*"]
+
+[lints]
+shadowing = "allow"
