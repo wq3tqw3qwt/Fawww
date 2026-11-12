@@ -1,0 +1,16 @@
+# Wally packages (run `wally install`)
+/Packages/
+/ServerPackages/
+/DevPackages/
+# Rojo / luau-lsp outputs
+/sourcemap.json
+*.rbxl
+*.rbxlx
+*.rbxm
+*.rbxmx
+/build/
+# Tooling caches
+/roblox.yml
+/globalTypes.d.luau
+/tools/out/
+.DS_Store
