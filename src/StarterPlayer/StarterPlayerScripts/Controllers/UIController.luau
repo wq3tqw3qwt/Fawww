@@ -117,7 +117,7 @@ function UIController.Open(name: string)
 	if entry.OnOpen then
 		task.spawn(entry.OnOpen)
 	end
-	GuiService.SelectedObject = firstSelectable(entry.Root)
+	UIKit.Select(firstSelectable(entry.Root))
 	UIController.Opened:Fire(name)
 end
 
@@ -188,7 +188,7 @@ function UIController.Confirm(text: string, onYes: () -> (), yesText: string?)
 			onYes()
 		end,
 	})
-	GuiService.SelectedObject = no
+	UIKit.Select(no)
 end
 
 return UIController

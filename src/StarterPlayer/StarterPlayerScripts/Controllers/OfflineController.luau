@@ -6,7 +6,6 @@
 ]]
 
 local AdService = game:GetService("AdService")
-local GuiService = game:GetService("GuiService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Config = require(ReplicatedStorage.Shared.Config)
@@ -194,7 +193,7 @@ local function show(seconds: number)
 		OnClick = doubleWithRobux,
 	})
 	refreshTexts()
-	GuiService.SelectedObject = collectButton
+	UIKit.Select(collectButton)
 
 	task.spawn(function()
 		local data = DataController.Get()

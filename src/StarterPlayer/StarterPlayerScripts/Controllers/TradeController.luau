@@ -512,7 +512,7 @@ local function showPrompt(requestId: string, fromName: string)
 		end,
 	})
 	if GuiService.SelectedObject == nil then
-		GuiService.SelectedObject = decline
+		UIKit.Select(decline)
 	end
 	task.delay(Config.Trade.RequestTimeoutSeconds, function()
 		if promptToken == token then

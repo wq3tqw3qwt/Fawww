@@ -6,7 +6,6 @@
 ]]
 
 local AdService = game:GetService("AdService")
-local GuiService = game:GetService("GuiService")
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
@@ -217,7 +216,7 @@ local function showGiftPicker(productKey: string, def: ProductDef)
 			overlay:Destroy()
 		end,
 	})
-	GuiService.SelectedObject = first or cancel
+	UIKit.Select(first or cancel)
 end
 
 --------------------------------------------------------------------------------

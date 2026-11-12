@@ -2027,8 +2027,8 @@ Config.Visuals = {
 		TextColor = Color3.fromRGB(255, 255, 255),
 		StrokeColor = Color3.fromRGB(20, 22, 30),
 		StrokeTransparency = 0.35,
-		MaxDistance = 140,
-		BillboardSize = UDim2.fromOffset(260, 64),
+		MaxDistance = 110,
+		BillboardSize = UDim2.fromScale(8, 2), -- studs: shrinks with distance instead of a fixed pixel size
 		PixelsPerStud = 40,
 	},
 	Particles = {
