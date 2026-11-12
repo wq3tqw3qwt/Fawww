@@ -63,6 +63,7 @@ Net.Functions = {
 	"WatchAd",
 	"MarkOfferSeen",
 	-- Social & misc
+	"RequestSnapshot",
 	"SetSetting",
 	"TutorialAdvance",
 	"GetLeaderboards",
@@ -105,7 +106,8 @@ local function getFolder(): Folder
 	else
 		folder = ReplicatedStorage:WaitForChild(FOLDER_NAME) :: Folder
 	end
-	return folder :: Folder
+	local result = folder :: any
+	return result
 end
 
 -- Server only: creates every remote. Safe to call more than once.

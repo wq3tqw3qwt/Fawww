@@ -61,7 +61,10 @@ function ReceiptLedger.Process(adapter: Adapter, purchaseId: string, grant: () -
 		return "PurchaseGranted"
 	end
 	if decision == "Grant" then
-		local ok, err = pcall(grant)
+		local ok, err = pcall(function(): any
+			grant()
+			return nil
+		end)
 		if not ok then
 			warn("[ReceiptLedger] grant failed for " .. purchaseId .. ": " .. tostring(err))
 			return "NotProcessedYet"

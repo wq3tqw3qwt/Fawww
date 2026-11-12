@@ -16,7 +16,7 @@ export type Signal<T...> = {
 	Destroy: (self: Signal<T...>) -> (),
 }
 
-type Handler = { fn: (...any) -> (), connected: boolean }
+type Handler = { fn: (...any) -> ...any, connected: boolean }
 
 function Signal.new<T...>(): Signal<T...>
 	local self = setmetatable({ _handlers = {} :: { Handler } }, Signal)
@@ -53,7 +53,7 @@ end
 
 function Signal.Fire(self: any, ...: any)
 	-- Snapshot so handlers may disconnect while firing.
-	local snapshot = table.clone(self._handlers)
+	local snapshot: { Handler } = table.clone(self._handlers)
 	for _, handler in snapshot do
 		if handler.connected then
 			local ok, err = pcall(handler.fn, ...)

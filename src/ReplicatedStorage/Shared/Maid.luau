@@ -7,7 +7,13 @@
 local Maid = {}
 Maid.__index = Maid
 
-export type Task = RBXScriptConnection | Instance | thread | () -> () | { Destroy: (any) -> () } | { Disconnect: (any) -> () }
+export type Task =
+	RBXScriptConnection
+	| Instance
+	| thread
+	| () -> ()
+	| { Destroy: (any) -> () }
+	| { Disconnect: (any) -> () }
 export type Maid = typeof(setmetatable({} :: { _tasks: { [any]: Task } }, Maid))
 
 function Maid.new(): Maid

@@ -148,7 +148,7 @@ export type LineModifiers = {
 
 -- Products per second for a line.
 function Formulas.LineOutput(levels: { number }, mods: LineModifiers?): number
-	local m = mods or {}
+	local m: LineModifiers = mods or {}
 	local slowest = math.huge
 	for _, l in levels do
 		slowest = math.min(slowest, Formulas.StageSpeed(l))
@@ -170,9 +170,7 @@ function Formulas.PackagingCost(hall: number, tier: number): number
 	if tier <= 1 then
 		return 0
 	end
-	return clampNumber(
-		Formulas.LineUnlockCost(Formulas.HallFirstLine(hall) + tier) * Config.Packaging.CostMult
-	)
+	return clampNumber(Formulas.LineUnlockCost(Formulas.HallFirstLine(hall) + tier) * Config.Packaging.CostMult)
 end
 
 function Formulas.VaultCapacitySeconds(tier: number, bigVaultBonus: number?): number
@@ -287,10 +285,7 @@ end
 export type EquippedMachine = { Id: string, Grade: number }
 
 -- Sum of machine Power (percent) and capped ability totals for the equipped set.
-function Formulas.MachineTotals(
-	equipped: { EquippedMachine },
-	rushActive: boolean
-): (number, { [string]: number })
+function Formulas.MachineTotals(equipped: { EquippedMachine }, rushActive: boolean): (number, { [string]: number })
 	local power = 0
 	local abilities: { [string]: number } = {}
 	local hasRushHour = false
@@ -453,7 +448,8 @@ function Formulas.ContractCashReward(
 	researchBonus: number,
 	rushActive: boolean
 ): number
-	local mult = (1 + contractPro + researchBonus) * (if rushActive then Config.Events.RushOrders.ContractRewardMult else 1)
+	local mult = (1 + contractPro + researchBonus)
+		* (if rushActive then Config.Events.RushOrders.ContractRewardMult else 1)
 	return clampNumber(incomePerSecond * tier.RewardIncomeMinutes * 60 * mult)
 end
 
